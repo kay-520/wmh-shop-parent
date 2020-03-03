@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author: create by wangmh
  * @name: MemberController.java
- * @description:
+ * @description: 会员接口
  * @date:2020/3/3
  **/
 @RestController
@@ -20,12 +20,12 @@ public class MemberController {
 
 
     @GetMapping("appInfo")
-    public String appInfo(@RequestParam("userId") Long userId){
+    public String appInfo(@RequestParam("userId") Long userId) {
         return weChatServiceFegin.getAppInfo(userId);
     }
 
     @GetMapping("test")
-    public RespMsg<?> test(){
+    public RespMsg<?> test() {
         return RespMsg.ok("hahahah");
     }
 }

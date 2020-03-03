@@ -93,3 +93,20 @@
 > --------wmh-shop-portal-spike 秒杀系统
 >
 > --------wmh-shop-portal-cms 系统 
+
+
+
+### 二、中间件地址信息
+
+#### 1.Nacos
+
+```
+http://localhost:8848/nacos     nacos/nacos
+```
+
+
+
+
+
+### 三、中间件环境搭建
+

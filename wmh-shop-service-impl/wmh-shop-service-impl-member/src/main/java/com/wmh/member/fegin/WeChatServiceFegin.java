@@ -11,5 +11,4 @@ import org.springframework.cloud.openfeign.FeignClient;
  **/
 @FeignClient("wmh-weixin")
 public interface WeChatServiceFegin extends WeChatService {
-
 }
