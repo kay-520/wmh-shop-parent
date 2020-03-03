@@ -1,0 +1,10 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: wmh-weixin
+  cloud:
+    nacos:
+      discovery:
+        ##nacos服务注册地址
+        server-addr: 127.0.0.1:8848
