@@ -7,11 +7,11 @@
     <groupId>com.wmh</groupId>
     <artifactId>wmh-shop-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-RELEASE</version>
     <modules>
         <module>wmh-shop-service-api</module>
         <module>wmh-shop-service-impl</module>
-        <module>mt-shop-common</module>
+        <module>wmh-shop-common</module>
     </modules>
 
     <parent>
@@ -74,11 +74,42 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
+<!--    &lt;!&ndash;注意限定版本一定为RELEASE,因为上传的对应仓库的存储类型为RELEASE &ndash;&gt;-->
+<!--    &lt;!&ndash;指定仓库地址 &ndash;&gt;-->
+<!--    <distributionManagement>-->
+<!--        <repository>-->
+<!--            &lt;!&ndash;此名称要和.m2/settings.xml中设置的ID一致 &ndash;&gt;-->
+<!--            <id>wmh-release</id>-->
+<!--            <url>http://192.168.75.128:8081/repository/wmh-release/</url>-->
+<!--        </repository>-->
+<!--    </distributionManagement>-->
 
-
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            &lt;!&ndash;发布代码Jar插件 &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-deploy-plugin</artifactId>-->
+<!--                <version>2.7</version>-->
+<!--            </plugin>-->
+<!--            &lt;!&ndash;发布源码插件 &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-source-plugin</artifactId>-->
+<!--                <version>2.2.1</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>jar</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 
 
 </project>

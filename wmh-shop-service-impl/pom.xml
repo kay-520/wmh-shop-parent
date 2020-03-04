@@ -5,7 +5,7 @@
     <parent>
         <artifactId>wmh-shop-parent</artifactId>
         <groupId>com.wmh</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0-RELEASE</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <description>公共接口的实现</description>
@@ -13,14 +13,15 @@
     <packaging>pom</packaging>
     <modules>
         <module>wmh-shop-service-impl-wechat</module>
-        <module>wmh-shop-service-impl-wechat</module>
         <module>wmh-shop-service-impl-member</module>
     </modules>
+
     <dependencies>
         <dependency>
             <groupId>com.wmh</groupId>
             <artifactId>wmh-shop-common-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0-RELEASE</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
