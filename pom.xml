@@ -12,6 +12,7 @@
         <module>wmh-shop-service-api</module>
         <module>wmh-shop-service-impl</module>
         <module>wmh-shop-common</module>
+        <module>wmh-shop-basics</module>
     </modules>
 
     <parent>
@@ -36,17 +37,27 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-        <!--  springboot 整合web组件-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
 
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>
             <version>2.1.1.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>1.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>1.5.21</version>
         </dependency>
 
     </dependencies>
@@ -76,40 +87,42 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-<!--    &lt;!&ndash;注意限定版本一定为RELEASE,因为上传的对应仓库的存储类型为RELEASE &ndash;&gt;-->
-<!--    &lt;!&ndash;指定仓库地址 &ndash;&gt;-->
-<!--    <distributionManagement>-->
-<!--        <repository>-->
-<!--            &lt;!&ndash;此名称要和.m2/settings.xml中设置的ID一致 &ndash;&gt;-->
-<!--            <id>wmh-release</id>-->
-<!--            <url>http://192.168.75.128:8081/repository/wmh-release/</url>-->
-<!--        </repository>-->
-<!--    </distributionManagement>-->
 
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            &lt;!&ndash;发布代码Jar插件 &ndash;&gt;-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-deploy-plugin</artifactId>-->
-<!--                <version>2.7</version>-->
-<!--            </plugin>-->
-<!--            &lt;!&ndash;发布源码插件 &ndash;&gt;-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-source-plugin</artifactId>-->
-<!--                <version>2.2.1</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>jar</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
+
+    <!--注意限定版本一定为RELEASE,因为上传的对应仓库的存储类型为RELEASE -->
+    <!--指定仓库地址 -->
+    <distributionManagement>
+        <repository>
+            <!--此名称要和.m2/settings.xml中设置的ID一致 -->
+            <id>wmh</id>
+            <url>http://192.168.75.128:8081/repository/wmh-release/</url>
+        </repository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <!--发布代码Jar插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.7</version>
+            </plugin>
+            <!--发布源码插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>

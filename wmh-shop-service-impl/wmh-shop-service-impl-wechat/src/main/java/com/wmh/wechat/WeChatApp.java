@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date:2020/3/3
  **/
 @SpringBootApplication
+//@EnableSwagger2Doc 若使用yml文件形式配置，注释掉swagger其他依赖，开启当前依赖，并在启动类上添加@EnableSwagger2Doc注解
 public class WeChatApp {
     public static void main(String[] args) {
         SpringApplication.run(WeChatApp.class, args);

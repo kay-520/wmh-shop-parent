@@ -16,5 +16,10 @@
             <artifactId>wmh-shop-service-api-wechat</artifactId>
             <version>1.0-RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>com.wmh</groupId>
+            <artifactId>wmh-shop-service-api-member</artifactId>
+            <version>1.0-RELEASE</version>
+        </dependency>
     </dependencies>
 </project>

@@ -1,0 +1,29 @@
+server:
+  port: 80
+spring:
+  application:
+    name: wmh-gateway
+  cloud:
+    nacos:
+      discovery:
+        ##nacos服务注册地址
+        server-addr: 127.0.0.1:8848
+    gateway:
+      locator:
+        enabled: true
+      routes:
+        - id: wmh-wechat
+          uri: lb://wmh-wechat
+          predicates:
+            - Path=/wmh-wechat/**
+          filters:
+            - SwaggerHeaderFilter
+            - StripPrefix=1
+        - id: wmh-member
+          uri: lb://wmh-member
+          predicates:
+            - Path=/wmh-member/**
+          filters:
+            - SwaggerHeaderFilter
+            - StripPrefix=1
+
