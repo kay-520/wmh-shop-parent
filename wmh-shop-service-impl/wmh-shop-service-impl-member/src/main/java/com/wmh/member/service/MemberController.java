@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date:2020/3/3
  **/
 @RestController
-@RefreshScope //
+@RefreshScope //刷新配置中心
 public class MemberController implements MemberService {
     @Value("${wmh.name}")
     private String name;
