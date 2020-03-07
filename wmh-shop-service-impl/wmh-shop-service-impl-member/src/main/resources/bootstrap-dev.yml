@@ -1,13 +1,16 @@
-server:
-  port: 9090
+## 开发环境
 spring:
-  application:
-    name: wmh-wechat
   cloud:
     nacos:
       discovery:
         ##nacos服务注册地址
         server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        ## 配置中心格式为yaml格式，Data ID：服务名-环境.yaml
+        file-extension: yaml
+wmh:
+  name: sdfds
 
 ###若在swagger类中开启@EnableSwaggerBootstrapUI 账户权限配置，请开启一下配置
 #swagger:
@@ -16,7 +19,6 @@ spring:
 #    enable: true
 #    username: admin
 #    password: admin
-
 
 ###若使用yml文件形式配置，注释掉swagger其他依赖，开启当前依赖，并在启动类上添加@EnableSwagger2Doc注解
 #swagger:
@@ -30,4 +32,3 @@ spring:
 #    email: xxxxxx@qq.com
 #    url: http://127.0.0.1:9090
 #  enabled: true
-

@@ -26,4 +26,7 @@ spring:
           filters:
             - SwaggerHeaderFilter
             - StripPrefix=1
+      ## 解决swagger测试时，url地址重复
+      x-forwarded:
+        enabled: false
 

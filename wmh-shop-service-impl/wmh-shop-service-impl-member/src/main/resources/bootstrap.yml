@@ -1,0 +1,10 @@
+## 注意：nacos客户端读取配置文件的名称一定是bootstrap.yml或者是bootstrap.properties，
+#否则无法加载到远程读取到该配置文件。
+
+server:
+  port: 7070
+spring:
+  application:
+    name: wmh-wechat
+  profiles:
+    active: dev
