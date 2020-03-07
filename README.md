@@ -102,6 +102,7 @@
 
 ```
 http://localhost:8848/nacos     nacos/nacos
+http://192.168.75.128:8848/nacos     nacos/nacos
 ```
 
 #### 2. Gitlab
@@ -157,7 +158,7 @@ docker run \
 
 ```shell
 vi /mnt/gitlab/etc/gitlab.rb
-external_url 'http://192.168.75.128'
+external_url 'http://192.168.75.128:8090'
 ```
 
 ##### 1.5 修改/mnt/gitlab/data/gitlab-rails/etc/gitlab.yml
@@ -216,7 +217,7 @@ docker pull sonatype/nexus3
 docker run -d -p 8081:8081 --name nexus -v /root/nexus-data:/var/nexus-data --restart=always sonatype/nexus3
 ```
 
-关闭防火墙，访问http://ip:8081
+关闭防火墙，访问http://192.168.75.128:8081
 
 进入容器获取初始密码：
 
@@ -318,6 +319,24 @@ http://maven.aliyun.com/nexus/content/groups/public/
 ```shell
 mvn deploy
 ```
+
+#### 3.Nacos环境搭建
+
+##### 3.1 下载镜像
+
+```shell
+docker pull nacos/nacos-server
+```
+
+##### 3.2 运行容器
+
+```shell
+docker run --env MODE=standalone --restart=always --name nacos -d -p 8848:8848 nacos/nacos-server
+```
+
+##### 3.3 访问
+
+http://192.168.75.128:8848/nacos    nacos/nacos
 
 ### 其他
 
