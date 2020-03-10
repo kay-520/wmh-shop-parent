@@ -108,7 +108,7 @@ http://192.168.75.128:8848/nacos     nacos/nacos
 #### 2. Gitlab
 
 ```
-http://192.168.75.128:8090/     admin/wmh19980515
+http://192.168.75.128:8090/     admin/admin123456
 ```
 
 #### 3.Nexus
@@ -232,7 +232,7 @@ vi /nexus-data/admin.password
 
 创建账户（wmh/wmh），并赋予权限
 
-创建maven2(hosted)，私人仓库：wmh-release
+创建maven2(hosted)，私人仓库：wmh-release （两种仓库类型：release和snapshot，两者同理）
 
 修改maven-central仓库中心仓库地址为阿里云仓库
 
@@ -366,22 +366,22 @@ http://192.168.75.128:8848/nacos    nacos/nacos
 > value：参数的汉字说明、解释
 >
 > required：参数是否必须传
-
-  	paramType：参数放在哪个地方
 >
->       · header --> 请求参数的获取：@RequestHeader
+> paramType：参数放在哪个地方
 >
->    ​     	 · query --> 请求参数的获取：@RequestParam
+> header --> 请求参数的获取：@RequestHeader
 >
->       · path（用于restful接口）--> 请求参数的获取：@PathVariable
+> query --> 请求参数的获取：@RequestParam
 >
-> ​    	  · body（不常用）
+> path（用于restful接口）--> 请求参数的获取：@PathVariable
 >
->    · form（不常用）  
+> body（不常用）
 >
->   dataType：参数类型，默认String，其它值dataType="Integer"    
+> form（不常用）  
 >
->      defaultValue：参数的默认值
+> dataType：参数类型，默认String，其它值dataType="Integer"    
+>
+> defaultValue：参数的默认值
 
 
 
@@ -409,7 +409,7 @@ http://192.168.75.128:8848/nacos    nacos/nacos
 
 ### 问题及解决方案
 
-##### 1.gateway网关整合Swagger时，swagger接口调试时，url地址重复
+##### 1.gateway网关整合Swagger时，swagger接口调试时，url地址重复问题
 
 解决方法：yml文件gateway下配置以下
 
