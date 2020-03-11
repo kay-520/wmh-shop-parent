@@ -1,5 +1,10 @@
 ## 开发环境
 spring:
+  datasource:
+    url: jdbc:mysql://192.168.75.128:3306/wmh?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
   cloud:
     nacos:
       discovery:
@@ -9,6 +14,30 @@ spring:
         server-addr: 192.168.75.128:8848
         ## 配置中心格式为yaml格式，Data ID：服务名-环境.yaml
         file-extension: yaml
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+logging:
+  level:
+    org.springframework.web: INFO
+    com.github.binarywang.demo.wx.mp: DEBUG
+    me.chanjar.weixin: DEBUG
+wx:
+  mp:
+    configs:
+      - appId: wx2a27dd5f2321030c
+        secret: d6881ac1b4e495a2e6f3159f72dea000
+        token: wangmh
+
+wmh:
+  wx:
+    msg: 您的消息我已经收到了，后期会给您回复的噢!
+    ## 心知天气接口 https://www.seniverse.com/
+    weatherUrl: https://api.seniverse.com/v3/weather/now.json?key=SIWLv50PvVFMH0k2A&location=####&language=zh-Hans&unit=c
 
 ###若在swagger类中开启@EnableSwaggerBootstrapUI 账户权限配置，请开启一下配置
 #swagger:

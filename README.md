@@ -117,7 +117,11 @@ http://192.168.75.128:8090/     admin/admin123456
 http://192.168.75.128:8081/    admin/admin,wmh/wmh
 ```
 
+#### 4.Mysql
 
+```
+192.168.75.128，3306 root/root
+```
 
 ### 三、中间件环境搭建
 
@@ -338,6 +342,25 @@ docker run --env MODE=standalone --restart=always --name nacos -d -p 8848:8848 n
 
 http://192.168.75.128:8848/nacos    nacos/nacos
 
+#### 4.Mysql
+
+```shell
+# 下载镜像
+docker pull mysql:5.7
+# 运行容器
+docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7
+```
+
+
+
+### 四、外网映射工具
+
+ https://natapp.cn/ 
+
+```
+natapp.exe -authtoken=xxxxxxxxx
+```
+
 ### 其他
 
 #### 1.Swagger配置说明 doc.html
@@ -406,6 +429,20 @@ http://192.168.75.128:8848/nacos    nacos/nacos
 @ApiModelProperty：用在属性上，描述响应类的属性
 
 
+
+#### 2.天气接口
+
+心知天气接口：https://www.seniverse.com/ 
+
+ [https://api.seniverse.com/v3/weather/now.json?key=SIWLv50PvVFMH0k2A&location=%E6%AD%A6%E6%B1%89&language=zh-Hans&unit=c](https://api.seniverse.com/v3/weather/now.json?key=SIWLv50PvVFMH0k2A&location=武汉&language=zh-Hans&unit=c) 
+
+
+
+#### 3.微信公众号测试平台
+
+ https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index 
+
+![微信公众号测试平台配置](./img/1.png)
 
 ### 问题及解决方案
 
