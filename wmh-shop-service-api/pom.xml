@@ -21,5 +21,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.wmh</groupId>
+            <artifactId>wmh-shop-common-core</artifactId>
+            <version>1.0-RELEASE</version>
+        </dependency>
     </dependencies>
 </project>

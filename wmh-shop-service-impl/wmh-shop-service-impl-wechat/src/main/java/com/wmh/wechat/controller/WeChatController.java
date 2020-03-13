@@ -1,5 +1,6 @@
 package com.wmh.wechat.controller;
 
+import com.wmh.common.base.BaseApiService;
 import com.wmh.wechat.api.service.WeChatService;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date:2020/3/3
  **/
 @RestController
-public class WeChatController implements WeChatService {
+public class WeChatController extends BaseApiService implements WeChatService {
 
     @Override
     public String getAppInfo(@RequestParam("userId") Long userId) {

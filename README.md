@@ -120,7 +120,13 @@ http://192.168.75.128:8081/    admin/admin,wmh/wmh
 #### 4.Mysql
 
 ```
-192.168.75.128，3306 root/root
+192.168.75.128  3306  root/root
+```
+
+#### 5.Redis
+
+```
+192.168.75.128  6379
 ```
 
 ### 三、中间件环境搭建
@@ -329,18 +335,13 @@ mvn deploy
 ##### 3.1 下载镜像
 
 ```shell
+# 下载镜像
 docker pull nacos/nacos-server
-```
-
-##### 3.2 运行容器
-
-```shell
+# 运行容器
 docker run --env MODE=standalone --restart=always --name nacos -d -p 8848:8848 nacos/nacos-server
-```
-
-##### 3.3 访问
-
+## 访问
 http://192.168.75.128:8848/nacos    nacos/nacos
+```
 
 #### 4.Mysql
 
@@ -351,7 +352,14 @@ docker pull mysql:5.7
 docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7
 ```
 
+#### 5.Redis
 
+```shell
+# 下载镜像
+docker pull redis
+# 运行容器
+docker run -itd --name redis -p 6379:6379 --restart=always redis
+```
 
 ### 四、外网映射工具
 

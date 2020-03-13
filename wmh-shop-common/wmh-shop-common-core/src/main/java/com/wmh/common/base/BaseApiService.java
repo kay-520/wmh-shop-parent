@@ -1,5 +1,6 @@
 package com.wmh.common.base;
 
+import com.wmh.common.bean.BeanUtils;
 import com.wmh.common.constants.Constants;
 import lombok.Data;
 
@@ -38,7 +39,14 @@ public class BaseApiService<T> {
         return setResult(Constants.HTTP_RES_CODE_200, Constants.HTTP_RES_CODE_200_VALUE, null);
     }
 
-
+    /**
+     * 返回成功，沒有data值,返回成功消息
+     *
+     * @return
+     */
+    public BaseResponse<T> setResultSuccess(String msg) {
+        return setResult(Constants.HTTP_RES_CODE_200, msg, null);
+    }
 
 
     /**
@@ -51,6 +59,39 @@ public class BaseApiService<T> {
      */
     public BaseResponse<T> setResult(Integer code, String msg, T data) {
         return new BaseResponse<T>(code, msg, data);
+    }
+
+    /***
+     * dto->do
+     * @param dtoEntity
+     * @param doClass
+     * @param <Do>
+     * @return
+     */
+    public static <Do> Do dtoToDo(Object dtoEntity, Class<Do> doClass) {
+        return BeanUtils.dtoToDo(dtoEntity, doClass);
+    }
+
+    /***
+     * do->dto
+     * @param doEntity
+     * @param dtoClass
+     * @param <Dto>
+     * @return
+     */
+    public static <Dto> Dto doToDto(Object doEntity, Class<Dto> dtoClass) {
+        return BeanUtils.doToDto(doEntity, dtoClass);
+    }
+
+    /***
+     * boolean判断 返回信息
+     * @param flag
+     * @param successMsg
+     * @param errorMsg
+     * @return
+     */
+    public BaseResponse<T> setResultFlag(boolean flag, String successMsg, String errorMsg) {
+        return flag ? setResultSuccess(successMsg) : setResultError(errorMsg);
     }
 
 }

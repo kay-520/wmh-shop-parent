@@ -24,7 +24,7 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
                 // api扫包
-                .apis(RequestHandlerSelectors.basePackage("com.wmh.member.service"))
+                .apis(RequestHandlerSelectors.basePackage("com.wmh.member.controller"))
                 // 接口地址前缀
                 .paths(PathSelectors.any())
                 .build();

@@ -1,5 +1,10 @@
 ## 生产环境
 spring:
+  datasource:
+    url: jdbc:mysql://192.168.75.128:3306/wmh?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
   cloud:
     nacos:
       discovery:
@@ -9,6 +14,16 @@ spring:
         server-addr: 192.168.75.128:8848
         ## 配置中心格式为yaml格式，Data ID：服务名-环境.yaml
         file-extension: yaml
+  redis:
+    host: 192.168.75.128
+    port: 6379
+    database: 0
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 wmh:
   name: sdfds
 
