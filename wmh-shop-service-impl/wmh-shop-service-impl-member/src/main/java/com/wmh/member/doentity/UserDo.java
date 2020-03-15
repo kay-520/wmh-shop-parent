@@ -20,7 +20,7 @@ public class UserDo implements Serializable {
     /**
      * userid
      */
-    @TableId(value = "user_id",type = IdType.AUTO)
+    @TableId(value = "user_id", type = IdType.AUTO)
     private Long id;
     /**
      * 手机号码
@@ -82,4 +82,22 @@ public class UserDo implements Serializable {
      */
     private String wxOpenId;
 
+    public UserDo() {
+    }
+
+    public UserDo(Long id, String mobile, String email, String password, String userName, long sex, Long age, Date createTime, Date updateTime, long isAvalible, String picImg, String qqOpenId, String wxOpenId) {
+        this.id = id;
+        this.mobile = mobile;
+        this.email = email;
+        this.password = password;
+        this.userName = userName;
+        this.sex = sex;
+        this.age = age;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.isAvalible = isAvalible;
+        this.picImg = picImg;
+        this.qqOpenId = qqOpenId;
+        this.wxOpenId = wxOpenId;
+    }
 }

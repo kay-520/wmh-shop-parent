@@ -464,6 +464,60 @@ natapp.exe -authtoken=xxxxxxxxx
         enabled: false
 ```
 
+##### 2.如何获取真实客户端IP  
+
+在会员服务中的request请求中，获取的ip是网关服务的服务ip，并不是真实的客户端ip。
+
+解决方法：Nginx获取客户端ip，将真实ip放入请求头中，在会员服务中直接从请求头中获取
+
+原因：服务之间存在多层代理。
+
+Nginx配置：
+
+```
+	upstream shopforward{
+		server 127.0.0.1:81;
+	}
+
+    server {
+        listen       80;
+        server_name  gateway.shop.com; ##在本地host中添加映射
+
+        location / {
+            proxy_pass http://shopforward/;
+			proxy_set_header   Host             $host;
+			proxy_set_header   X-Real-IP        $remote_addr;						
+			proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+        }
+     }
+```
+
+
+
+gateway网关配置：
+
+```java
+@Component
+public class MyGlobelFilter implements GlobalFilter {
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        //  nginx 会从请求头中设置 客户端的真实ip放入网关
+        String sourceIp = exchange.getRequest().getHeaders().getFirst("X-Real-IP");
+        if (StringUtils.isEmpty(sourceIp)) {
+            ServerHttpResponse response = exchange.getResponse();
+            response.setStatusCode(HttpStatus.BAD_REQUEST);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("code", "500");
+            jsonObject.put("msg", "sourceIp is null");
+            DataBuffer buffer = response.bufferFactory().wrap(jsonObject.toJSONString().getBytes());
+            return response.writeWith(Mono.just(buffer));
+        }
+        // 使用网关过滤
+        return chain.filter(exchange);
+    }
+}
+```
+
 
 
 

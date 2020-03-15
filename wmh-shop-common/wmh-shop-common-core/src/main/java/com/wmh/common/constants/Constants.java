@@ -15,7 +15,9 @@ public interface Constants {
     String REGISTER_SUCCESS = "register success!";
     String REGISTER_ERROR = "register error!";
     String MOBILE_OR_PASSWORD_ERROR = "mobile or password is error!";
-    String SALT="user";
-    String TOKEN_IS_NULL="token is null";
-    String TOKE_INVALID="token is invalid or expired";
+    String SALT = "user";
+    String TOKEN_IS_NULL = "token is null";
+    String TOKE_INVALID = "token is invalid or expired";
+    String CHANNEL_ERROR = "channel is error!";
+    String DEVICEINFOR_IS_NULL = "deviceInfor is null!";
 }

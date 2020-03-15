@@ -4,8 +4,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wmh.member.doentity.UserLoginLogDo;
 import com.wmh.member.mapper.UserLoginLogMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,12 +15,5 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class UserLoginLogService extends ServiceImpl<UserLoginLogMapper, UserLoginLogDo> {
-    @Autowired
-    private UserLoginLogMapper userLoginLogMapper;
-    @Async
-    public void loginLog(UserLoginLogDo userLoginLogDo) {
-        log.info(Thread.currentThread().getName() + ",userLoginLogDo:" + userLoginLogDo.toString() + ",流程2");
-        userLoginLogMapper.insertUserLoginLog(userLoginLogDo);
-    }
 
 }

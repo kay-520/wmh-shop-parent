@@ -13,8 +13,9 @@ import com.wmh.member.api.dto.resp.UserRespDto;
 import com.wmh.member.api.service.MemberService;
 import com.wmh.member.doentity.UserDo;
 import com.wmh.member.doentity.UserLoginLogDo;
-import com.wmh.member.service.UserLoginLogService;
+import com.wmh.member.service.UserAsyncLogComponent;
 import com.wmh.member.service.UserService;
+import com.wmh.member.utils.ChannelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -39,7 +40,10 @@ public class MemberController extends BaseApiService implements MemberService {
     private TokenUtils tokenUtils;
 
     @Autowired
-    private UserLoginLogService userLoginLogService;
+    private ChannelUtils channelUtils;
+
+    @Autowired
+    private UserAsyncLogComponent userAsyncLogComponent;
 
     /***
      * 会员注册接口
@@ -52,7 +56,7 @@ public class MemberController extends BaseApiService implements MemberService {
             return setResultError(Constants.NOT_FOUND, bindingResult.getFieldError().getDefaultMessage());
         }
         QueryWrapper<UserDo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(UserRegisterDto.MOBILE, userRegisterDto.getMobile());
+        queryWrapper.lambda().eq(UserDo::getMobile, userRegisterDto.getMobile());
         //验证手机号是否存在
         UserDo userDo = userService.getOne(queryWrapper, true);
         if (userDo != null) {
@@ -76,23 +80,32 @@ public class MemberController extends BaseApiService implements MemberService {
      * @return
      */
     @Override
-    public BaseResponse<JSONObject> login(@Valid UserRegisterDto userRegisterDto, BindingResult bindingResult) {
+    public BaseResponse<JSONObject> login(@Valid UserRegisterDto userRegisterDto, BindingResult bindingResult,
+                                          String sourceIp, String channel, String deviceInfor) {
         if (bindingResult.hasErrors()) {
             return setResultError(bindingResult.getFieldError().getDefaultMessage());
         }
         QueryWrapper<UserDo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(UserRegisterDto.MOBILE, userRegisterDto.getMobile())
-                .eq(UserRegisterDto.PASSWORD, MD5Util.MD5(userRegisterDto.getPassword()));
+        queryWrapper.lambda().eq(UserDo::getMobile, userRegisterDto.getMobile())
+                .eq(UserDo::getPassword, MD5Util.MD5(userRegisterDto.getPassword()));
         //验证手机号和密码是否正确
         UserDo userDo = userService.getOne(queryWrapper, true);
         if (userDo == null) {
             return setResultError(Constants.MOBILE_OR_PASSWORD_ERROR);
         }
+        //验证登录类型
+        if (!channelUtils.existChannel(channel)) {
+            return setResultError(Constants.CHANNEL_ERROR);
+        }
+        //验证登录设备是否为空
+        if (StringUtils.isEmpty(deviceInfor)) {
+            return setResultError(Constants.DEVICEINFOR_IS_NULL);
+        }
         //生成token
-        String token = tokenUtils.createToken(Constants.SALT, userDo.getId().toString());
-        UserLoginLogDo userLoginLogDo = new UserLoginLogDo(userDo.getId(), "192.168.1.1", new Date(), token, "PC", "谷歌浏览器");
+        String token = tokenUtils.createToken(Constants.SALT, userDo.getId().toString(), 3000L);
+        UserLoginLogDo userLoginLogDo = new UserLoginLogDo(userDo.getId(), sourceIp, new Date(), token, channel, deviceInfor);
         //生成登录日志
-        userLoginLogService.loginLog(userLoginLogDo);
+        userAsyncLogComponent.loginLog(userLoginLogDo);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("userToken", token);
         return setResultSuccess(jsonObject);
@@ -114,9 +127,6 @@ public class MemberController extends BaseApiService implements MemberService {
             return setResultError(Constants.TOKE_INVALID);
         }
         long userId = Long.parseLong(tokenValue);
-//        QueryWrapper<UserDo> wrapper=new QueryWrapper<>();
-//        wrapper.eq(UserDo.ID,userId);
-//        UserDo byId = userService.getOne(wrapper);
         UserDo byId = userService.getById(userId);
         UserRespDto userRespDto = doToDto(byId, UserRespDto.class);
         userRespDto.setMobile(DesensitizationUtil.mobileEncrypt(userRespDto.getMobile()));

@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @author: create by wangmh
@@ -14,9 +15,7 @@ import javax.validation.constraints.NotNull;
  **/
 @Data
 @ApiModel
-public class UserRegisterDto {
-    public static final String MOBILE = "mobile";
-    public static final String PASSWORD = "password";
+public class UserRegisterDto implements Serializable {
     /**
      * 手机号码
      */

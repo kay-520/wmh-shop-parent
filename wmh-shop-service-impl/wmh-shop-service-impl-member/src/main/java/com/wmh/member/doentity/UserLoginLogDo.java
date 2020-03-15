@@ -1,5 +1,7 @@
 package com.wmh.member.doentity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -16,6 +18,7 @@ import java.util.Date;
 @TableName(value = "user_login_log")
 public class UserLoginLogDo implements Serializable {
     private static final Integer DEFAULT_PID = 10;
+    @TableId(type = IdType.AUTO)
     Long id;
     Long userId;
     String loginIp;
@@ -23,6 +26,17 @@ public class UserLoginLogDo implements Serializable {
     String loginToken;
     String channel;
     String equipment;
+    long isAvailability;
+
+    public UserLoginLogDo(Long userId, String loginIp, Date loginTime, String loginToken, String channel, String equipment, long isAvailability) {
+        this.userId = userId;
+        this.loginIp = loginIp;
+        this.loginTime = loginTime;
+        this.loginToken = loginToken;
+        this.channel = channel;
+        this.equipment = equipment;
+        this.isAvailability = isAvailability;
+    }
 
     public UserLoginLogDo(Long userId, String loginIp, Date loginTime, String loginToken, String channel, String equipment) {
         this.userId = userId;
@@ -31,5 +45,23 @@ public class UserLoginLogDo implements Serializable {
         this.loginToken = loginToken;
         this.channel = channel;
         this.equipment = equipment;
+    }
+
+    public UserLoginLogDo(long isAvailability) {
+        this.isAvailability = isAvailability;
+    }
+
+    public UserLoginLogDo(Long id, Long userId, String loginIp, Date loginTime, String loginToken, String channel, String equipment, long isAvailability) {
+        this.id = id;
+        this.userId = userId;
+        this.loginIp = loginIp;
+        this.loginTime = loginTime;
+        this.loginToken = loginToken;
+        this.channel = channel;
+        this.equipment = equipment;
+        this.isAvailability = isAvailability;
+    }
+
+    public UserLoginLogDo() {
     }
 }

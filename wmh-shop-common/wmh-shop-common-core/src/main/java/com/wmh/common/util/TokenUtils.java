@@ -20,9 +20,13 @@ public class TokenUtils {
         return redisUtil.getString(token);
     }
 
-    public String createToken(String prefix, String value) {
+    public void delToken(String token) {
+        redisUtil.delKey(token);
+    }
+
+    public String createToken(String prefix, String value, Long timeout) {
         String token = prefix + "_" + UUID.randomUUID().toString().replace("-", "");
-        redisUtil.setString(token, value);
+        redisUtil.setString(token, value, timeout);
         return token;
     }
 }
