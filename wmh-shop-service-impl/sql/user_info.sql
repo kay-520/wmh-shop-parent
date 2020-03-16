@@ -11,7 +11,7 @@
  Target Server Version : 50647
  File Encoding         : 65001
 
- Date: 13/03/2020 23:44:20
+ Date: 15/03/2020 16:39:52
 */
 
 SET NAMES utf8mb4;
@@ -37,6 +37,6 @@ CREATE TABLE `user_info`  (
   `UPDATE_TIME` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`USER_ID`) USING BTREE,
   UNIQUE INDEX `MOBILE_UNIQUE`(`MOBILE`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 89 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户会员表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 90 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户会员表' ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;
