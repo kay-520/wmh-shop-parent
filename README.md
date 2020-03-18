@@ -371,6 +371,8 @@ natapp.exe -authtoken=xxxxxxxxx
 
 ### 五、微信公众号扫描登陆
 
+参照：[微信官方开发文档](https://developers.weixin.qq.com/doc/offiaccount/Account_Management/Generating_a_Parametric_QR_Code.html)
+
 > 原理：
 >
 > ​	1.通过用户id获取ticket凭证，生成带参数的链接（二维码链接）
