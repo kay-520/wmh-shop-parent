@@ -2,6 +2,7 @@ package com.wmh.member.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.wmh.common.base.BaseApiService;
 import com.wmh.common.base.BaseResponse;
 import com.wmh.common.constants.Constants;
@@ -132,4 +133,53 @@ public class MemberController extends BaseApiService implements MemberService {
         userRespDto.setMobile(DesensitizationUtil.mobileEncrypt(userRespDto.getMobile()));
         return setResultSuccess(userRespDto);
     }
+
+    /***
+     * 通过微信openid查询用户是否关注公众号
+     * @param openId
+     * @return
+     */
+    @Override
+    public BaseResponse<UserRespDto> selectAndUpdateByOpenId(long userId, String openId) {
+        UserDo userDo = userService.getOne((new QueryWrapper<UserDo>()).lambda().eq(UserDo::getWxOpenId, openId));
+        if (userDo == null) {
+            UpdateWrapper<UserDo> wrapper = new UpdateWrapper<>();
+            wrapper.lambda().eq(UserDo::getId, userId);
+            userService.update(new UserDo(openId), wrapper);
+            return setResultSuccess(Constants.UPDATE_SUCCESS);
+        }
+        return setResultError(Constants.UPDATE_ERROR);
+    }
+
+    /***
+     * 根据openId查询是否存在
+     * @param openId
+     * @return
+     */
+    @Override
+    public BaseResponse<JSONObject> selectByOpenId(String openId) {
+        UserDo userDo = userService.getOne((new QueryWrapper<UserDo>()).lambda().eq(UserDo::getWxOpenId, openId));
+        if (userDo == null) {
+            return setResultSuccess(Constants.UPDATE_SUCCESS);
+        }
+        return setResultError(Constants.UPDATE_ERROR);
+    }
+
+    /***
+     * 通过openId取消关联
+     * @param openId
+     * @return
+     */
+    @Override
+    public BaseResponse<JSONObject> updateByOpenId(String openId) {
+        UpdateWrapper<UserDo> wrapper = new UpdateWrapper<>();
+        wrapper.lambda().eq(UserDo::getWxOpenId, openId);
+        boolean update = userService.update(new UserDo(""), wrapper);
+        if (update) {
+            return setResultSuccess("update success!");
+        }
+        return setResultError("update error!");
+    }
+
+
 }

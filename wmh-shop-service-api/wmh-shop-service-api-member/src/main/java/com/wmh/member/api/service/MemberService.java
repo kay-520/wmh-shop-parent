@@ -3,15 +3,10 @@ package com.wmh.member.api.service;
 import com.alibaba.fastjson.JSONObject;
 import com.wmh.common.base.BaseResponse;
 import com.wmh.member.api.dto.req.UserRegisterDto;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
+import com.wmh.member.api.dto.resp.UserRespDto;
+import io.swagger.annotations.*;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -39,8 +34,27 @@ public interface MemberService {
     );
 
 
-    @PostMapping("getUserInfo")
+    @GetMapping("getUserInfo")
     @ApiOperation("根据token获取用户信息")
     @ApiImplicitParam(name = "token", value = "xxxxx", paramType = "String")
     BaseResponse<JSONObject> login(@RequestParam String token);
+
+
+    @GetMapping("selectAndUpdateByOpenId")
+    @ApiOperation("通过微信openid查询用户是否关注公众号,若未关注进行关联")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "xxxxx", paramType = "long"),
+            @ApiImplicitParam(name = "openId", value = "xxxxx", paramType = "String")
+    })
+    BaseResponse<UserRespDto> selectAndUpdateByOpenId(@RequestParam long userId, @RequestParam String openId);
+
+    @GetMapping("selectByOpenId")
+    @ApiOperation("根据openId查询是否存在")
+    @ApiImplicitParam(name = "openId", value = "xxxxx", paramType = "String")
+    BaseResponse<JSONObject> selectByOpenId(@RequestParam String openId);
+
+    @GetMapping("updateByOpenId")
+    @ApiOperation("通过openId取消关联")
+    @ApiImplicitParam(name = "openId", value = "xxxxx", paramType = "String")
+    BaseResponse<JSONObject> updateByOpenId(@RequestParam String openId);
 }

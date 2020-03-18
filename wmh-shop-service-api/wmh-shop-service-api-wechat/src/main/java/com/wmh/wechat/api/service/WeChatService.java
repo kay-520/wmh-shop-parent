@@ -1,5 +1,7 @@
 package com.wmh.wechat.api.service;
 
+import com.alibaba.fastjson.JSONObject;
+import com.wmh.common.base.BaseResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -20,10 +22,9 @@ public interface WeChatService {
      *
      * @return
      */
-    @GetMapping("/getAppInfo")
-    @ApiOperation("getAppInfo接口")
+    @GetMapping("/getQrUrl")
+    @ApiOperation("生成二维码接口")
     @ApiImplicitParam(name = "userId", value = "用户Id", required = true)
-    @ApiResponse(code = 200, message = "响应成功")
-    String getAppInfo(@RequestParam("userId") Long userId);
+    BaseResponse<JSONObject> getQrUrl(@RequestParam("userId") Long userId);
 
 }

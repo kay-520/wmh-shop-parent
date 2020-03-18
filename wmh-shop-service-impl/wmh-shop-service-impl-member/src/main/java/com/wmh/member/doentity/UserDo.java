@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -98,6 +97,10 @@ public class UserDo implements Serializable {
         this.isAvalible = isAvalible;
         this.picImg = picImg;
         this.qqOpenId = qqOpenId;
+        this.wxOpenId = wxOpenId;
+    }
+
+    public UserDo(String wxOpenId) {
         this.wxOpenId = wxOpenId;
     }
 }

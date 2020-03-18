@@ -369,6 +369,26 @@ docker run -itd --name redis -p 6379:6379 --restart=always redis
 natapp.exe -authtoken=xxxxxxxxx
 ```
 
+### 五、微信公众号扫描登陆
+
+> 原理：
+>
+> ​	1.通过用户id获取ticket凭证，生成带参数的链接（二维码链接）
+>
+> ​		—微信服务的getQrUrl接口生成
+>
+> ​		—(QR) https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket =xxxxx
+>
+> ​	2.用户扫码识别时，则会将参数通知给微信回调接口 
+>
+> ​		—(微信回调接口) http://fqr3iw.natappfree.cc/wx/portal/ +appId
+>
+> ​	3.回调接口通过ticket凭证获取用户id，判断是否关联过openId，若没有关联，就进行关联
+>
+> ​		— 参照：ScanHandler（扫码已关注用户）、SubscribeHandler（扫码新用户关注）、UnsubscribeHandler（取消关注）
+
+
+
 ### 其他
 
 #### 1.Swagger配置说明 doc.html
