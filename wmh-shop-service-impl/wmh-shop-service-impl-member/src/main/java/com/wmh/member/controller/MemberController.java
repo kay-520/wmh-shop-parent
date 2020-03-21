@@ -14,9 +14,11 @@ import com.wmh.member.api.dto.resp.UserRespDto;
 import com.wmh.member.api.service.MemberService;
 import com.wmh.member.domain.UserDo;
 import com.wmh.member.domain.UserLoginLogDo;
+import com.wmh.member.fegin.WeChatServiceFegin;
 import com.wmh.member.service.UserService;
 import com.wmh.member.service.impl.UserAsyncLogComponent;
 import com.wmh.member.utils.ChannelUtils;
+import com.wmh.wechat.api.dto.LoginTemplateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -45,6 +47,9 @@ public class MemberController extends BaseApiService implements MemberService {
 
     @Autowired
     private UserAsyncLogComponent userAsyncLogComponent;
+
+    @Autowired
+    private WeChatServiceFegin weChatServiceFegin;
 
     /***
      * 会员注册接口
@@ -104,6 +109,10 @@ public class MemberController extends BaseApiService implements MemberService {
         }
         //生成token
         String token = tokenUtils.createToken(Constants.SALT, userDo.getId().toString(), 3000L);
+        //若存在微信openId，发送微信公众模板信息
+        if (!StringUtils.isEmpty(userDo.getWxOpenId())) {
+            weChatServiceFegin.sendLoginTemplate(new LoginTemplateDto(DesensitizationUtil.mobileEncrypt(userDo.getMobile()), new Date(), sourceIp, deviceInfor, userDo.getWxOpenId()));
+        }
         UserLoginLogDo userLoginLogDo = new UserLoginLogDo(userDo.getId(), sourceIp, new Date(), token, channel, deviceInfor);
         //生成登录日志
         userAsyncLogComponent.loginLog(userLoginLogDo);

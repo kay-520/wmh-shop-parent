@@ -38,6 +38,7 @@ wmh:
     msg: 您的消息我已经收到了，后期会给您回复的噢!
     ## 心知天气接口 https://www.seniverse.com/
     weatherUrl: https://api.seniverse.com/v3/weather/now.json?key=SIWLv50PvVFMH0k2A&location=####&language=zh-Hans&unit=c
+    loginTemplateId: T4Djn9Y62-VbPhSn9lRpxSgiHMJidCopKEa8z1D-ihU
 
 ###若在swagger类中开启@EnableSwaggerBootstrapUI 账户权限配置，请开启一下配置
 #swagger:

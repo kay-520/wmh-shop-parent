@@ -4,6 +4,10 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 ## xxl-job配置
 logging:
   config: classpath:logback.xml

@@ -373,6 +373,7 @@ docker run -itd --name redis -p 6379:6379 --restart=always redis
 
 #### 6.xxl-job-admin
 
+官网：https://www.xuxueli.com/xxl-job/
 ```shell
 #将xxl-job-admin-2.1.2.jar包放置服务器中，执行以下命令，jar在项目doc目录
 nohup java -jar xxl-job-admin-2.1.2.jar >/data/logs/xxl.log 2>&1 &
