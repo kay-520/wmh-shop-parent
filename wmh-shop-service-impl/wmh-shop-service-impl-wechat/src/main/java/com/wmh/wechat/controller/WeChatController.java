@@ -16,6 +16,7 @@ import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -71,7 +72,10 @@ public class WeChatController extends BaseApiService implements WeChatService {
      * 模板信息案例：亲爱的用户:{{first.DATA}} 登陆时间:{{keyword1.DATA}} 登陆ip:{{keyword2.DATA}} 登陆设备:{{keyword3.DATA}} 如果不是您本人登陆,可以联系管理员锁定账号.
      */
     @Override
-    public BaseResponse<JSONObject> sendLoginTemplate(@Valid LoginTemplateDto loginTemplateDto) {
+    public BaseResponse<JSONObject> sendLoginTemplate(@Valid LoginTemplateDto loginTemplateDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            setResultError(bindingResult.getFieldError().getDefaultMessage());
+        }
         WxMpTemplateMessage wxMpTemplateMessage = new WxMpTemplateMessage();
         wxMpTemplateMessage.setTemplateId(loginTemplateId);
         wxMpTemplateMessage.setToUser(loginTemplateDto.getOpenId());
