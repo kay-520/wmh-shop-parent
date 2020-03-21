@@ -30,6 +30,14 @@ wmh:
   ##二维码前缀
   qUrlPre: https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=
 
+##阿里云短信
+aliyun:
+  sms:
+    accessKeyId: xxxxxxx
+    accessKeySecret: xxxxxxxxx
+    template_code: SMS_151579189
+    sign_name: 十次方
+
 ###若在swagger类中开启@EnableSwaggerBootstrapUI 账户权限配置，请开启一下配置
 #swagger:
 #  production: false

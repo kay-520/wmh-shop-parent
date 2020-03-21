@@ -28,8 +28,8 @@ mybatis-plus:
 ##阿里云短信
 aliyun:
   sms:
-    accessKeyId: LTAItxQxon2DOlL3
-    accessKeySecret: 2nyGDMponTdO3VGUgMebjRk8SkoMVc
+    accessKeyId: xxxxxxx
+    accessKeySecret: xxxxxxxxx
     template_code: SMS_151579189
     sign_name: 十次方
 
