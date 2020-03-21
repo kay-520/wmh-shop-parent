@@ -18,6 +18,8 @@ spring:
     host: 192.168.75.128
     port: 6379
     database: 0
+  rabbitmq:
+    host: 192.168.75.128
 
 mybatis-plus:
   configuration:
@@ -25,7 +27,8 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 wmh:
-  name: sdfds
+  ##二维码前缀
+  qUrlPre: https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=
 
 ###若在swagger类中开启@EnableSwaggerBootstrapUI 账户权限配置，请开启一下配置
 #swagger:

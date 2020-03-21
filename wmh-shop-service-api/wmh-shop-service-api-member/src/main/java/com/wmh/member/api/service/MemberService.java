@@ -2,6 +2,7 @@ package com.wmh.member.api.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wmh.common.base.BaseResponse;
+import com.wmh.member.api.dto.req.UserMsgRegisterDto;
 import com.wmh.member.api.dto.req.UserRegisterDto;
 import com.wmh.member.api.dto.resp.UserRespDto;
 import io.swagger.annotations.*;
@@ -25,6 +26,12 @@ public interface MemberService {
     @ApiResponse(code = 200, message = "register success！")
     BaseResponse<JSONObject> register(@Valid @RequestBody UserRegisterDto userRegisterDto, BindingResult bindingResult);
 
+    @PostMapping("registerByMsg")
+    @ApiOperation("会员短信注册接口")
+    @ApiImplicitParam(name = "userMsgRegisterDto", value = "{\"mobile\":\"xxxx\",\"password\":\"xxxx\",\"code\":\"xxx\"}", paramType = "body")
+    @ApiResponse(code = 200, message = "register success！")
+    BaseResponse<JSONObject> registerByMsg(@Valid @RequestBody UserMsgRegisterDto userMsgRegisterDt, BindingResult bindingResult);
+
     @PostMapping("login")
     @ApiOperation("会员登录接口")
     @ApiImplicitParam(name = "userRegisterDto", value = "{\"mobile\":\"xxxx\",\"password\":\"xxxx\"}", paramType = "body")
@@ -32,7 +39,6 @@ public interface MemberService {
     BaseResponse<JSONObject> login(@Valid @RequestBody UserRegisterDto userRegisterDto, BindingResult bindingResult, @RequestHeader("X-Real-IP")
             String sourceIp, @RequestHeader("channel") String channel, @RequestHeader("deviceInfor") String deviceInfor
     );
-
 
     @GetMapping("getUserInfo")
     @ApiOperation("根据token获取用户信息")
@@ -57,4 +63,9 @@ public interface MemberService {
     @ApiOperation("通过openId取消关联")
     @ApiImplicitParam(name = "openId", value = "xxxxx", paramType = "String")
     BaseResponse<JSONObject> updateByOpenId(@RequestParam String openId);
+
+    @PostMapping("/sendMsg")
+    @ApiOperation("发送短信")
+    @ApiImplicitParam(name = "mobile", value = "13227088773", required = true)
+    BaseResponse<JSONObject> sendMsg(@RequestParam("mobile") Long mobile);
 }

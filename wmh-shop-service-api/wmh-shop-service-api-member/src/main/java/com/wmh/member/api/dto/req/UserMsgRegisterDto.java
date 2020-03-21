@@ -5,17 +5,16 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 /**
  * @author: create by wangmh
- * @name: UserRegisterDto.java
- * @description: 用户注册请求DTO
- * @date:2020/3/13
+ * @name: UserMsgRegisterDto.java
+ * @description:
+ * @date:2020/3/21
  **/
 @Data
-@ApiModel("注册请求参数DTO")
-public class UserRegisterDto implements Serializable {
+@ApiModel("短信注册接口")
+public class UserMsgRegisterDto {
     /**
      * 手机号码
      */
@@ -29,4 +28,11 @@ public class UserRegisterDto implements Serializable {
     @NotNull(message = "password is null")
     @ApiModelProperty(value = "密码", name = "passWord", required = true)
     private String password;
+
+    /***
+     * 短信验证码
+     */
+    @NotNull(message = "code is null")
+    @ApiModelProperty(value = "验证码", name = "code", required = true)
+    private String code;
 }

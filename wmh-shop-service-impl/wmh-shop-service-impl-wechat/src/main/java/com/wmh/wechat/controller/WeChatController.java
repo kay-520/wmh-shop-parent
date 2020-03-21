@@ -46,7 +46,7 @@ public class WeChatController extends BaseApiService implements WeChatService {
      * @return
      */
     @Override
-    public BaseResponse<JSONObject> getQrUrl(Long userId) {
+    public BaseResponse<Object> getQrUrl(Long userId) {
         if (userId == null) {
             return setResultError("userId is Null!");
         }
@@ -59,7 +59,7 @@ public class WeChatController extends BaseApiService implements WeChatService {
                 return setResultError(Constants.QR_GEN_ERROR);
             }
             String ticket = wxMpQrCodeTicket.getTicket();
-            return setResultSuccess(URLEncoder.encode(ticket, "UTF-8"));
+            return setResult(Constants.HTTP_RES_CODE_200, "QrUrl create success!", URLEncoder.encode(ticket, "UTF-8"));
         } catch (WxErrorException | UnsupportedEncodingException e) {
             return setResultError(Constants.QR_GEN_ERROR);
         }
@@ -72,10 +72,10 @@ public class WeChatController extends BaseApiService implements WeChatService {
      * 模板信息案例：亲爱的用户:{{first.DATA}} 登陆时间:{{keyword1.DATA}} 登陆ip:{{keyword2.DATA}} 登陆设备:{{keyword3.DATA}} 如果不是您本人登陆,可以联系管理员锁定账号.
      */
     @Override
-    public BaseResponse<JSONObject> sendLoginTemplate(@Valid LoginTemplateDto loginTemplateDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            setResultError(bindingResult.getFieldError().getDefaultMessage());
-        }
+    public BaseResponse<JSONObject> sendLoginTemplate(@Valid LoginTemplateDto loginTemplateDto) {
+//        if (bindingResult.hasErrors()) {
+//            setResultError(bindingResult.getFieldError().getDefaultMessage());
+//        }
         WxMpTemplateMessage wxMpTemplateMessage = new WxMpTemplateMessage();
         wxMpTemplateMessage.setTemplateId(loginTemplateId);
         wxMpTemplateMessage.setToUser(loginTemplateDto.getOpenId());

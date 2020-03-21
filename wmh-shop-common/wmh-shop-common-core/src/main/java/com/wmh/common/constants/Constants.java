@@ -26,4 +26,6 @@ public interface Constants {
     Integer QR_CODE_EXPIRE_SECONDS = 18000;
     //生成二维码失败
     String QR_GEN_ERROR = "Failed to generate QR code!";
+    //存入redis中的前缀
+    String MSG_PRE = "smscode_";
 }

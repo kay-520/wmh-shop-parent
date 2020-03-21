@@ -26,12 +26,11 @@ public interface WeChatService {
     @GetMapping("/getQrUrl")
     @ApiOperation("生成二维码接口")
     @ApiImplicitParam(name = "userId", value = "用户Id", required = true)
-    BaseResponse<JSONObject> getQrUrl(@RequestParam("userId") Long userId);
+    BaseResponse<Object> getQrUrl(@RequestParam("userId") Long userId);
 
     @PostMapping("/sendLoginTemplate")
     @ApiOperation("发送微信模板信息")
     @ApiImplicitParam(name = "loginTemplateDto", paramType = "body")
-    BaseResponse<JSONObject> sendLoginTemplate(@Valid @RequestBody LoginTemplateDto loginTemplateDto, BindingResult bindingResult);
-
+    BaseResponse<JSONObject> sendLoginTemplate(@Valid @RequestBody LoginTemplateDto loginTemplateDto);
 
 }

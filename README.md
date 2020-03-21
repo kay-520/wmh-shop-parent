@@ -139,6 +139,12 @@ http://192.168.75.128:8081/    admin/admin,wmh/wmh
 192.168.75.128:8888  admin/123456
 ```
 
+#### 7.RabbitMQ
+
+```
+192.168.75.128:15672   guest/guest
+```
+
 ### 三、中间件环境搭建
 
 #### 1.Gitlab环境搭建
@@ -386,6 +392,17 @@ http://192.168.75.128:8888/    admin/admin
 #2.启动本地job工程
 #3.在任务管理中，选择执行器并新增任务（填写基本信息）
 #若想实现分片，可启动多个本地工程，改变其本地服务端口，及执行器端口测试，AppName必须相同
+```
+
+#### 7.RabbitMQ
+
+```shell
+# 下载镜像
+docker pull rabbitmq:management
+# 运行容器
+docker run -itd -p 5672:5672 -p 15672:15672 --restart=always --name rabbitmq rabbitmq:management
+# 访问可视化界面
+http://192.168.75.128:15672/  guest/guest
 ```
 
 ### 四、外网映射工具
