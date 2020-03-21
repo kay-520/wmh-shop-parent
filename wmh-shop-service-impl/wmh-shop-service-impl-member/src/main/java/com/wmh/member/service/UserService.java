@@ -1,16 +1,13 @@
 package com.wmh.member.service;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.wmh.member.doentity.UserDo;
-import com.wmh.member.mapper.UserMapper;
-import org.springframework.stereotype.Service;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.wmh.member.domain.UserDo;
 
 /**
  * @author: create by wangmh
  * @name: UserService.java
- * @description: 用户Service层
- * @date:2020/3/13
+ * @description:
+ * @date:2020/3/21
  **/
-@Service
-public class UserService extends ServiceImpl<UserMapper, UserDo> {
+public interface UserService extends IService<UserDo> {
 }

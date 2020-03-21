@@ -13,6 +13,7 @@
         <module>wmh-shop-service-impl</module>
         <module>wmh-shop-common</module>
         <module>wmh-shop-basics</module>
+        <module>wmh-shop-service-job</module>
     </modules>
 
     <parent>

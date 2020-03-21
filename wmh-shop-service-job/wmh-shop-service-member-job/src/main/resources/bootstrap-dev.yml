@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.75.128:3306/wmh?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+## xxl-job配置
+logging:
+  config: classpath:logback.xml
+xxl:
+  job:
+    accessToken:
+    admin:
+      addresses: http://192.168.75.128:8888
+    executor:
+      appname: xxl-userlog-job-executor
+      ## 本地电脑局域网ip地址，生存环境上可不配置，自动注册
+      ## 本地测试确保，本地电脑防火墙关闭
+      ip: 192.168.31.142
+      logpath: ./data/applogs/xxl-job/jobhandler
+      logretentiondays: 30
+      port: 9999
+job:
+  pageSize: 1

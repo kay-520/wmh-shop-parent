@@ -74,7 +74,11 @@
 >
 > 
 >
-> ----wmh-shop-job---任务调度工程
+> ----wmh-shop-service-job---任务调度工程
+>
+> ---------wmh-shop-service-member-job 会员服务job任务 9998
+>
+> 
 >
 > ----wmh-shop-pay- reconcile --- 支付对账任务
 >
@@ -127,6 +131,12 @@ http://192.168.75.128:8081/    admin/admin,wmh/wmh
 
 ```
 192.168.75.128  6379
+```
+
+#### 6.xxl-job-admin
+
+```
+192.168.75.128:8888  admin/123456
 ```
 
 ### 三、中间件环境搭建
@@ -361,6 +371,22 @@ docker pull redis
 docker run -itd --name redis -p 6379:6379 --restart=always redis
 ```
 
+#### 6.xxl-job-admin
+
+```shell
+#将xxl-job-admin-2.1.2.jar包放置服务器中，执行以下命令，jar在项目doc目录
+nohup java -jar xxl-job-admin-2.1.2.jar >/data/logs/xxl.log 2>&1 &
+
+##访问
+http://192.168.75.128:8888/    admin/admin
+
+##操作步骤
+#1.创建执行器（AppName为本地项目配置文件中xxl.job.executor.appname）
+#2.启动本地job工程
+#3.在任务管理中，选择执行器并新增任务（填写基本信息）
+#若想实现分片，可启动多个本地工程，改变其本地服务端口，及执行器端口测试，AppName必须相同
+```
+
 ### 四、外网映射工具
 
  https://natapp.cn/ 
@@ -388,8 +414,6 @@ natapp.exe -authtoken=xxxxxxxxx
 > ​	3.回调接口通过ticket凭证获取用户id，判断是否关联过openId，若没有关联，就进行关联
 >
 > ​		— 参照：ScanHandler（扫码已关注用户）、SubscribeHandler（扫码新用户关注）、UnsubscribeHandler（取消关注）
-
-
 
 ### 其他
 
@@ -476,7 +500,7 @@ natapp.exe -authtoken=xxxxxxxxx
 
 ### 问题及解决方案
 
-##### 1.gateway网关整合Swagger时，swagger接口调试时，url地址重复问题
+#### 1.gateway网关整合Swagger时，swagger接口调试时，url地址重复问题
 
 解决方法：yml文件gateway下配置以下
 
@@ -486,7 +510,7 @@ natapp.exe -authtoken=xxxxxxxxx
         enabled: false
 ```
 
-##### 2.如何获取真实客户端IP  
+#### 2.如何获取真实客户端IP  
 
 在会员服务中的request请求中，获取的ip是网关服务的服务ip，并不是真实的客户端ip。
 
@@ -540,7 +564,13 @@ public class MyGlobelFilter implements GlobalFilter {
 }
 ```
 
+#### 3.xxl-job注意事项
 
+问题：在测试环境中，虚拟机中服务连接定时任务工程失败
+
+原因：1.本地电脑未关闭防火墙 2.在测试环境中，连接远程xxl-job-admin服务，务必配置好执行器地址，生产环境可不配，实现自动注册。
+
+解决：1.关闭本地电脑防火墙 2.在配置文件中配置xxl.job.executor.ip的本地ip地址（局域网ip地址）
 
 
 

@@ -1,7 +1,7 @@
 package com.wmh.member.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.wmh.member.doentity.UserDo;
+import com.wmh.member.domain.UserDo;
 
 /**
  * @author: create by wangmh
