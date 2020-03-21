@@ -28,4 +28,7 @@ public interface Constants {
     String QR_GEN_ERROR = "Failed to generate QR code!";
     //存入redis中的前缀
     String MSG_PRE = "smscode_";
+
+    String UNIONLOGIN = "member.unionLogin";
+    String UNIONLOG_CALLBACK = "member.unionLoginCallback.";
 }

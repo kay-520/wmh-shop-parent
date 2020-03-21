@@ -433,7 +433,92 @@ natapp.exe -authtoken=xxxxxxxxx
 >
 > ​		— 参照：ScanHandler（扫码已关注用户）、SubscribeHandler（扫码新用户关注）、UnsubscribeHandler（取消关注）
 
-### 其他
+### 六、第三方联合登录实现
+
+> oath2.0授权原理：
+>
+> 1.根据appId和appKey获取授权码
+> 
+> 2.根据授权码获取accesstoken
+> 
+> 3.根据accesstoken获取openId
+> 
+>4.根据openId获取用户信息
+
+#### 1.QQ第三方登录
+
+>测试AppID及APPKey：
+>
+>```
+>AppID: 101410454
+>AppKy: de56b00427f5970650c4f8ee3cfcfc2d
+>网站地址：http://www.itmayiedu.com:7070
+>回调地址：http://www.itmayiedu.com:7070/login/oauth/callback?unionPublicId=mayikt_qq
+>```
+>
+>注意：本地测试需配置host文件          127.0.0.1 [www.itmayiedu.com](http://www.itmayiedu.com)  
+>
+>文档资料 ：[QQ互联](https://wiki.connect.qq.com/%E4%BD%BF%E7%94%A8authorization_code%E8%8E%B7%E5%8F%96access_token)
+>
+
+实现思路：
+
+##### 1.获取授权码Authorization Code
+
+ ```
+https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=${AppID}&redirect_uri=&{url}&state
+
+#1.response_type：授权类型，默认code
+#2.client_id：应用appId
+#3.redirect_uri：成功授权后的回调地址，必须是注册appid时填写的主域名下的地址，注意需要将url进行URLEncode
+#4.state：client端的状态值。用于第三方应用防止CSRF攻击，成功授权后回调时会原样带回。
+#5.scope（可选）：请求用户授权时向用户显示的可进行授权的列表。
+#6.display（可选）：仅PC网站接入时使用。用于展示的样式。不传则默认展示为PC下的样式。
+
+案例：
+https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101410454&redirect_uri=http://www.itmayiedu.com:7070/login/oauth/callback?unionPublicId=wmh_qq
+ ```
+
+##### 2.通过授权码Authorization Code获取accessToken
+
+```
+https://graph.qq.com/oauth2.0/token?grant_type=authorization_code&client_id=${appId}&client_secret=${appKey}&code=${code}&redirect_uri=${url}
+
+#1.grant_type：授权类型为authorization_code
+#2.client_id：应用appId
+#3.client_secret：应用appKey
+#4.code:第一步返回的授权码Authorization Code
+#5.redirect_uri：回调地址，同第一步回调地址
+
+返回说明：
+access_token=0F47FB9C8A1AEDD3D643AB7000C473DD&expires_in=7776000&refresh_token=66064228390D4F917ABA490345D5447D
+#1.access_token：授权令牌
+#2.expires_in：有效期，单位为秒。
+#3.refresh_token：在授权自动续期步骤中，获取新的Access_Token时需要提供的参数。注：refresh_token仅一次有效
+
+案例：
+https://graph.qq.com/oauth2.0/token?grant_type=authorization_code&client_id=101410454&client_secret=de56b00427f5970650c4f8ee3cfcfc2d&code=A3D5BA3CABEEF331529138F6CCFCADF0&redirect_uri=http://www.itmayiedu.com:7070/login/oauth/callback?unionPublicId=wmh_qq
+
+返回：access_token=0F47FB9C8A1AEDD3D643AB7000C473DD&expires_in=7776000&refresh_token=66064228390D4F917ABA490345D5447D
+```
+
+##### 3.通过accessToken获取用户OpenID_OAuth2.0
+
+```
+https://graph.qq.com/oauth2.0/me?access_token=${access_token}
+
+#1.access_token：第二步获取的accessToken值
+
+返回说明：
+callback( {"client_id":"YOUR_APPID","openid":"YOUR_OPENID"} );
+#1.openid是此网站上唯一对应用户身份的标识，网站可将此ID进行存储便于用户下次登录时辨识其身份，或将其与用户在网站上的原有账号进行绑定。
+
+
+案例：
+https://graph.qq.com/oauth2.0/me?access_token=0F47FB9C8A1AEDD3D643AB7000C473DD
+
+返回：callback( {"client_id":"101410454","openid":"9123F2B68A93753597C07E6065EB4034"} )
+```
 
 #### 1.Swagger配置说明 doc.html
 

@@ -3,9 +3,10 @@ package com.wmh.member;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author: create by wangmh
@@ -16,9 +17,14 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableFeignClients
 @MapperScan("com.wmh.member.mapper")
-@ComponentScan(basePackages={"com.wmh.member","com.wmh.common"})//启动扫包范围
+@ComponentScan(basePackages = {"com.wmh.member", "com.wmh.common"})//启动扫包范围
 public class MemberApp {
     public static void main(String[] args) {
         SpringApplication.run(MemberApp.class, args);
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }

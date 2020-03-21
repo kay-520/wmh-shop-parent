@@ -29,4 +29,8 @@ public class TokenUtils {
         redisUtil.setString(token, value, timeout);
         return token;
     }
+    public String createToken(String prefix, String value) {
+        String token = prefix + "_" + UUID.randomUUID().toString().replace("-", "");
+        return token;
+    }
 }

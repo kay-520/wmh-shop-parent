@@ -43,7 +43,7 @@ import java.util.Map;
 @RestController
 //@RefreshScope //刷新配置中心
 public class MemberController extends BaseApiService implements MemberService {
-    @Value("${wmh.qUrlPre}")
+    @Value("${wmh.login.qUrlPre}")
     private String qUrlPre;
     @Autowired
     private UserService userService;
