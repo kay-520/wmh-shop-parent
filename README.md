@@ -520,6 +520,15 @@ https://graph.qq.com/oauth2.0/me?access_token=0F47FB9C8A1AEDD3D643AB7000C473DD
 返回：callback( {"client_id":"101410454","openid":"9123F2B68A93753597C07E6065EB4034"} )
 ```
 
+##### 4.通过AppId、accessToken、openId获取用户信息
+
+```
+https://graph.qq.com/user/get_user_info?access_token=${otken}&oauth_consumer_key=${appId}&openid=${openId}
+
+案例：
+https://graph.qq.com/user/get_user_info?access_token=0F47FB9C8A1AEDD3D643AB7000C473DD&oauth_consumer_key=101410454&openid=9123F2B68A93753597C07E6065EB4034
+```
+
 #### 1.Swagger配置说明 doc.html
 
 @Api：用在请求的类上，表示对类的说明
