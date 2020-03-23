@@ -1,5 +1,6 @@
 package com.wmh.member.strategy.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wmh.common.util.TokenUtils;
 import com.wmh.member.domain.UnionLoginDo;
 import com.wmh.member.strategy.UnionLoginStrategy;
@@ -47,8 +48,8 @@ public class QQUnionLoginStrategy implements UnionLoginStrategy {
         if (!accessToken.contains("access_token=")) {
             return null;
         }
-        String[] split = accessToken.split("=");
-        accessToken = split[1];
+        String[] split = accessToken.split("&");
+        accessToken = split[0];//获取access_token=xxxxxx字符串
         if (StringUtils.isEmpty(accessToken)) {
             return null;
         }
@@ -63,9 +64,10 @@ public class QQUnionLoginStrategy implements UnionLoginStrategy {
         if (!flag) {
             return null;
         }
-        String[] split1 = openId.replace("callback( {", "").
-                replace("} );", "").split(",");
-        openId = split1[1];
+        //callback( {"client_id":"YOUR_APPID","openid":"YOUR_OPENID"} ); 处理字符串获取openId
+        JSONObject jsonObject = JSONObject.parseObject(openId.replace("callback( ", "").
+                replace(" );", ""));
+        openId = (String) jsonObject.get("openid");
         //3.生成token
         String token = tokenUtils.createToken("qq.openid.", openId);
         return token;

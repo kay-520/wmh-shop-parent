@@ -40,7 +40,7 @@ wmh:
     qUrlPre: https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=
     qq:
       accesstoken: https://graph.qq.com/oauth2.0/token?grant_type=authorization_code&client_id={client_id}&client_secret={client_secret}&code={code}&redirect_uri={redirect_uri}
-      openid: https://graph.qq.com/oauth2.0/me?access_token=
+      openid: https://graph.qq.com/oauth2.0/me?
 
 ###若在swagger类中开启@EnableSwaggerBootstrapUI 账户权限配置，请开启一下配置
 #swagger:
