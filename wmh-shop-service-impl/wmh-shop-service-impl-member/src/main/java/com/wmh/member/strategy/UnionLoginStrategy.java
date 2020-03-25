@@ -1,6 +1,7 @@
 package com.wmh.member.strategy;
 
 import com.wmh.member.domain.UnionLoginDo;
+import com.wmh.member.domain.UserDo;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,4 +10,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface UnionLoginStrategy {
     String unionLoginCallback(UnionLoginDo unionLoginDo, HttpServletRequest request);
+
+    UserDo selectOpenId(String openId);
 }

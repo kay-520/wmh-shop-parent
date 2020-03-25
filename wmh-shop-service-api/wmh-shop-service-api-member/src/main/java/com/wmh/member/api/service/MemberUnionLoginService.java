@@ -27,4 +27,9 @@ public interface MemberUnionLoginService {
     @ApiImplicitParam(name = "unionPublicId", paramType = "String", value = "wmh_qq")
     BaseResponse<JSONObject> unionLoginCallback(@RequestParam("unionPublicId") String unionPublicId);
 
+    @GetMapping("/openIdToken")
+    @ApiOperation("基于openIdToken登录")
+    @ApiImplicitParam(name = "openToken", paramType = "String", value = "member.unionLoginCallback._805d235d5aa548f6a2a70587bf60b5c6")
+    BaseResponse<JSONObject> openIdLoginToken(@RequestParam("openToken") String openToken);
+
 }

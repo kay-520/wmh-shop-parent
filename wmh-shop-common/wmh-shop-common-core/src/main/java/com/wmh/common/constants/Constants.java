@@ -31,4 +31,9 @@ public interface Constants {
 
     String UNIONLOGIN = "member.unionLogin";
     String UNIONLOG_CALLBACK = "member.unionLoginCallback.";
+    String OPENID_IS_NULL = "openId is null";
+    String TOKENVAUE_IS_NULL = "tokenValue is not exist Or error";
+    String OPENID = "openId";
+    String UNIONPUBLICID = "unionPublicId";
+    String USER_NOT_BOUND = "The user has not bound an account, please associate the account";
 }

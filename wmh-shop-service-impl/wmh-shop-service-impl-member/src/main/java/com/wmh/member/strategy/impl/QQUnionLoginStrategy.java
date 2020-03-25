@@ -1,8 +1,11 @@
 package com.wmh.member.strategy.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wmh.common.util.TokenUtils;
 import com.wmh.member.domain.UnionLoginDo;
+import com.wmh.member.domain.UserDo;
+import com.wmh.member.service.UserService;
 import com.wmh.member.strategy.UnionLoginStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -19,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  * @description:
  * @date:2020/3/22
  **/
-@Component
+@Component("qQUnionLoginStrategy")
 @Slf4j
 public class QQUnionLoginStrategy implements UnionLoginStrategy {
 
@@ -34,16 +37,19 @@ public class QQUnionLoginStrategy implements UnionLoginStrategy {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private UserService userService;
+
 
     @Override
     public String unionLoginCallback(UnionLoginDo unionLoginDo, HttpServletRequest request) {
         String code = request.getParameter("code");
         //1.根据授权码accessToken
-        qqAccessTokenAddres = qqAccessTokenAddres.replace("{client_id}"
+        String accessTokenAddres = qqAccessTokenAddres.replace("{client_id}"
                 , unionLoginDo.getAppId()).replace("{client_secret}", unionLoginDo.getAppKey()).
                 replace("{code}", code).replace("{redirect_uri}", unionLoginDo.getRedirectUri());
-        log.info("qqAccessTokenAddres----------->{}", qqAccessTokenAddres);
-        String accessToken = restTemplate.getForObject(qqAccessTokenAddres, String.class);
+        log.info("accessTokenAddres----------->{}", accessTokenAddres);
+        String accessToken = restTemplate.getForObject(accessTokenAddres, String.class);
         log.info("accessToken----------->{}", accessToken);
         if (!accessToken.contains("access_token=")) {
             return null;
@@ -68,8 +74,21 @@ public class QQUnionLoginStrategy implements UnionLoginStrategy {
         JSONObject jsonObject = JSONObject.parseObject(openId.replace("callback( ", "").
                 replace(" );", ""));
         openId = (String) jsonObject.get("openid");
+        log.info("openId----------->{}", openId);
         //3.生成token
         String token = tokenUtils.createToken("qq.openid.", openId);
         return token;
+    }
+
+    /***
+     * 根据qqOpenId查询用户
+     * @param openId
+     * @return
+     */
+    @Override
+    public UserDo selectOpenId(String openId) {
+        QueryWrapper<UserDo> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(UserDo::getQqOpenId, openId);
+        return userService.getOne(wrapper);
     }
 }

@@ -453,7 +453,7 @@ natapp.exe -authtoken=xxxxxxxxx
 >AppID: 101410454
 >AppKy: de56b00427f5970650c4f8ee3cfcfc2d
 >网站地址：http://www.itmayiedu.com:7070
->回调地址：http://www.itmayiedu.com:7070/login/oauth/callback?unionPublicId=mayikt_qq
+>回调地址：http://www.itmayiedu.com:7070/login/oauth/callback?unionPublicId=wmh_qq
 >```
 >
 >注意：本地测试需配置host文件          127.0.0.1 [www.itmayiedu.com](http://www.itmayiedu.com)  
@@ -528,6 +528,101 @@ https://graph.qq.com/user/get_user_info?access_token=${otken}&oauth_consumer_key
 案例：
 https://graph.qq.com/user/get_user_info?access_token=0F47FB9C8A1AEDD3D643AB7000C473DD&oauth_consumer_key=101410454&openid=9123F2B68A93753597C07E6065EB4034
 ```
+
+#### 2.微信第三方登录
+
+> 测试AppID及APPKey：
+>
+> ```
+> AppID: wx2a27dd5f2321030c
+> AppKy: d6881ac1b4e495a2e6f3159f72dea000
+> 网站地址：http://www.itmayiedu.com:7070
+> 回调地址：http://www.itmayiedu.com:7070/login/oauth/callback?unionPublicId=wmh_wechat
+> ```
+>
+> 注意：本地测试需配置host文件          127.0.0.1  [www.itmayiedu.com](http://www.itmayiedu.com)  
+>
+> 文档资料 ：[微信开放文档]( https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html#0 )
+
+##### 1. 用户同意授权，获取code
+
+```
+https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2a27dd5f2321030c&redirect_uri=http://www.itmayiedu.com:7070/loginQu/oauth/callback?unionPublicId=wmh_wechat&response_type=code&scope=snsapi_userinfo&state=wmh#wechat_redirect
+
+#1.appid：应用appId
+#2.redirect_uri：回调地址
+#3.response_type：响应类型，默认code
+#4.scope：应用授权作用域，snsapi_base （不弹出授权页面，直接跳转，只能获取用户openid），snsapi_userinfo （弹出授权页面，可通过openid拿到昵称、性别、所在地。并且， 即使在未关注的情况下，只要用户授权，也能获取其信息 ）
+#5.state（可选）：重定向后会带上state参数，开发者可以填写a-zA-Z0-9的参数值，最多128字节
+#6.#wechat_redirect：无论直接打开还是做页面302重定向时候，必须带此参数
+```
+
+##### 2. 通过code换取网页授权access_token
+
+```
+https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx2a27dd5f2321030c&secret=d6881ac1b4e495a2e6f3159f72dea000&code=071qr0Ym0rOmjm1b2KXm0KK2Ym0qr0YH&grant_type=authorization_code
+#1.appid：应用appId
+#2.secret：应用秘钥
+#3.code：填写第一步获取的code参数
+#4.grant_type：填写为authorization_code
+
+返回：
+{
+"access_token": "31_J29ufIUWbYf90yinw5iJXOYp4JkcjZzFw2wW7RBzqqFrxY0B5AfO7VU5Sr9589U-IbZMz_EQQz5qid9fHN9y7w",
+"expires_in": 7200,
+"refresh_token": "31_NgiO8ccyjOv7yzhmqL5MGFKpf-0yAys7LAb_4Q4tuWiy0mvqo-raA3QxrjBXi_SU4iTYAhRendbKGeWDfA4kQg",
+"openid": "odRiAtxd0Piod7uKKOYGpxlIEYFI",
+"scope": "snsapi_userinfo"
+}
+#1.access_token：网页授权接口调用凭证（授权令牌）
+#2.expires_in：凭证超时时间
+#3.refresh_token：用户刷新access_token
+#4.openid：用户唯一标识
+#5.scope：用户授权的作用域
+```
+
+##### 3.刷新access_token（如果需要）
+
+```
+https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=wx2a27dd5f2321030c&grant_type=refresh_token&refresh_token=31_NgiO8ccyjOv7yzhmqL5MGFKpf-0yAys7LAb_4Q4tuWiy0mvqo-raA3QxrjBXi_SU4iTYAhRendbKGeWDfA4kQg
+#1.appid：应用appId
+#2.grant_type：填写为refresh_token
+#3.refresh_token：填写通过access_token获取到的refresh_token参数
+
+返回：
+{
+"access_token": "31_J29ufIUWbYf90yinw5iJXOYp4JkcjZzFw2wW7RBzqqFrxY0B5AfO7VU5Sr9589U-IbZMz_EQQz5qid9fHN9y7w",
+"expires_in": 7200,
+"refresh_token": "31_NgiO8ccyjOv7yzhmqL5MGFKpf-0yAys7LAb_4Q4tuWiy0mvqo-raA3QxrjBXi_SU4iTYAhRendbKGeWDfA4kQg",
+"openid": "odRiAtxd0Piod7uKKOYGpxlIEYFI",
+"scope": "snsapi_userinfo"
+}
+#1.access_token：网页授权接口调用凭证（授权令牌）
+#2.expires_in：凭证超时时间
+#3.refresh_token：用户刷新access_token
+#4.openid：用户唯一标识
+#5.scope：用户授权的作用域
+```
+
+##### 4. 拉取用户信息(需scope为 snsapi_userinfo)
+
+```
+https://api.weixin.qq.com/sns/userinfo?access_token=31_J29ufIUWbYf90yinw5iJXOYp4JkcjZzFw2wW7RBzqqFrxY0B5AfO7VU5Sr9589U-IbZMz_EQQz5qid9fHN9y7w&openid=odRiAtxd0Piod7uKKOYGpxlIEYFI&lang=zh_CN
+#1.
+```
+
+##### 5.附：检验授权凭证（access_token）是否有效
+
+```
+https://api.weixin.qq.com/sns/auth?access_token=31_J29ufIUWbYf90yinw5iJXOYp4JkcjZzFw2wW7RBzqqFrxY0B5AfO7VU5Sr9589U-IbZMz_EQQz5qid9fHN9y7w&openid=odRiAtxd0Piod7uKKOYGpxlIEYFI
+#1.access_token:网页授权接口调用凭证（授权令牌）
+#2.openid：用户的唯一标识
+
+返回：
+{ "errcode":0,"errmsg":"ok"}
+```
+
+### 其他
 
 #### 1.Swagger配置说明 doc.html
 
